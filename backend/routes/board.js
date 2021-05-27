@@ -17,4 +17,11 @@ router.post("/saveTask", Auth, async (req, res) =>{
     return res.status(200).send({result});
 });
 
+router.get("/listTask", Auth, async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).send("Usuario no registra en DB");
+    const board = await Board.find({userId: req.user._id});
+    return res.status(200).send({board});
+});
+
 module.exports = router;
