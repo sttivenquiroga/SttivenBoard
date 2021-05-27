@@ -24,4 +24,25 @@ router.get("/listTask", Auth, async (req, res) => {
     return res.status(200).send({board});
 });
 
+router.put("/updateTask", Auth, async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).send("Usuario no existe");
+    const board = await Board.findByIdAndUpdate(req.body._id, {
+        userId: user._id,
+        nombre: req.body.name,
+        description: req.body.description,
+        status: req.body.status
+    });
+    if (!board) return res.status(400).send("No se pudo editar la actividad");
+    return res.status(200).send({ board });
+});
+
+router.delete("/:_id", Auth, async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(400).send("Usuario no existe");
+    const board = await Board.findByIdAndDelete(req.params._id);
+    if (!board) return res.status(400).send("No se pudo eliminar la tarea");
+    return res.status(200).send("Tarea eliminada");
+});
+
 module.exports = router;
