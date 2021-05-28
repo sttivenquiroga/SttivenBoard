@@ -5,6 +5,13 @@ const bcrypt = require("bcrypt");
 
 router.post("/registerUser", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
+  if (!req.body) {
+    res.status(400).send("No hay datos para guardar");
+  }else{
+    if (!req.body.name) return res.status(400).send("No se ingresó un nombre");
+    if (!req.body.email) return res.status(400).send("No se ingresó un correo");
+    if (!req.body.password) return res.status(400).send("No se ingresó una contraseña")
+  }
   if (user) return res.status(400).send("Ya esta registrado este correo electronico");
   const hash = await bcrypt.hash(req.body.password, 10); // Password encryptation
   user = new User({

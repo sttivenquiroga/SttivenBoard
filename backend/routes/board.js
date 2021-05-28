@@ -4,6 +4,9 @@ const Board = require("../models/board");
 const User = require("../models/user");
 const Auth = require("../middleware/auth");
 
+/**
+ * Save an verificate user registration
+ */
 router.post("/saveTask", Auth, async (req, res) => {
   verificateUser(req, res);
   const data = req.body;
@@ -24,12 +27,18 @@ router.post("/saveTask", Auth, async (req, res) => {
   return res.status(200).send({ result });
 });
 
+/**
+ * Find tasks
+ */
 router.get("/listTask", Auth, async (req, res) => {
   verificateUser(req, res);
   const board = await Board.find({ userId: req.user._id });
   return res.status(200).send({ board });
 });
 
+/**
+ * Udate and verificate tasks
+ */
 router.put("/updateTask", Auth, async (req, res) => {
   verificateUser(req, res);
   const data = req.body;
