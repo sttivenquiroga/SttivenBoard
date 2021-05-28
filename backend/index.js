@@ -15,7 +15,7 @@ app.use("/api/board/", Board);
 const port = process.env.PORT || 3002;
 
 app.listen(port, () =>
-  console.log("Servidor en ejcución en el puerto " + port)
+  console.log("Servidor en ejecución en el puerto " + port)
 );
 
 mongoose

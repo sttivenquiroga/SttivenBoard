@@ -4,6 +4,9 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { route } = require("./user");
 
+/**
+ * Login module
+ */
 router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send("Email o password incorrectos");

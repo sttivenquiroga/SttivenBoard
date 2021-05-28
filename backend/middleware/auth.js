@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
-
+/**
+ * Autentication module, to do any action
+ */
 const auth = (req, res, next) =>{
     let jwtToken = req.header("Authorization");
     if (!jwtToken) return res.status(400).send("Acceso no concedido, no hay un token");
