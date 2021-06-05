@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const boardSchema = mongoose.Schema({
-    userId: String,
+    userId: { type: mongoose.Schema.ObjectId, ref: "user"},
     name: String,
     description: String,
     status: String,
