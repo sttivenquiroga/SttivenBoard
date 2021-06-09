@@ -1,0 +1,10 @@
+.bgHeader{
+    background-color: #9599816e;
+}
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+.headerSpacer{
+    flex: 1 1 auto;
+}
