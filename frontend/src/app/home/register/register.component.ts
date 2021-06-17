@@ -30,23 +30,27 @@ export class RegisterComponent implements OnInit {
       this.closeAlert();
     } else {
       this.auth.registerUser(this.registerData).subscribe(
-        (res) => {
+        (res: any) => {
           console.log(res);
-          this.successMessage = 'Register user: Sucessful';
-          this.closeAlert();
+          localStorage.setItem('token', res.jwtToken);
+          this.router.navigate(['/listTask']);
+          this.registerData = {};
         },
         (err) => {
           console.log(err);
           this.errorMessage = err.error;
           this.closeAlert();
+          this.registerData = {};
         }
       );
     }
   }
   closeAlert() {
     setTimeout(() => {
-      this.successMessage = '';
       this.errorMessage = '';
     }, 2000);
+  }
+  closeX() {
+    this.errorMessage = '';
   }
 }

@@ -1,0 +1,24 @@
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+.button{
+    width: 100%;
+}
+.card{
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+mat-card-title{
+    text-align: center;
+}
+.colorButton{
+    background-color: #f0f8ffa4;
+}
