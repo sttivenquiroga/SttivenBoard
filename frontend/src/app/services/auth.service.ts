@@ -12,9 +12,15 @@ export class AuthService {
     this.env = environment.APP_URL;
   }
   registerUser(user: any) {
-    return this.http.post(this.env + "user/registerUser", user);
+    return this.http.post(this.env + 'user/registerUser', user);
   }
   login(user: any) {
-    return this.http.post(this.env + "auth/login", user);
+    return this.http.post(this.env + 'auth/login', user);
+  }
+  loggedIn() {
+    return !!localStorage.getItem('token');
+  }
+  getToken() {
+    return localStorage.getItem('token');
   }
 }

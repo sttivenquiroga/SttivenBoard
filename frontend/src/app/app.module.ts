@@ -14,10 +14,10 @@ import { RegisterRoleComponent } from './admin/register-role/register-role.compo
 import { RegisterUserComponent } from './admin/register-user/register-user.component';
 import { UpdateRoleComponent } from './admin/update-role/update-role.component';
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
-import { AuthService } from "./services/auth.service";
-import { BoardService } from "./services/board.service";
-import { TokenInterceptorService } from "./services/token-interceptor.service";
-import { AuthGuard } from "./guard/auth.guard";
+import { AuthService } from './services/auth.service';
+import { BoardService } from './services/board.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './guard/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,8 +26,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     RegisterRoleComponent,
     RegisterUserComponent,
     UpdateRoleComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,9 +57,18 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MatFormFieldModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [AuthService, BoardService, AuthGuard, TokenInterceptorService],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService,
+    BoardService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
