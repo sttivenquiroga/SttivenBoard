@@ -24,7 +24,6 @@ export class SaveTaskComponent implements OnInit {
     } else {
       this.boardService.saveTask(this.taskData).subscribe((res: any)=>{
         console.log(res);
-        // localStorage.setItem('token', res.jwtToken);
         this.taskData = {};
         this.router.navigate(['/listTask']);
       }, (err)=>{
