@@ -10,27 +10,55 @@ import { Router } from '@angular/router';
 export class SaveTaskComponent implements OnInit {
   public taskData: any;
   public errorMessage: String;
+  public selectedFile: any;
   constructor(private boardService: BoardService, private router: Router) {
     this.taskData = {};
     this.errorMessage = '';
+    this.selectedFile = null;
   }
 
   ngOnInit(): void {}
-  saveTask(){
+  saveTask() {
     if (!this.taskData.name || !this.taskData.description) {
       console.log('Process failed: Incomplete data');
       this.errorMessage = 'Process failed: Incomplete data';
-      this.closeAlert();      
+      this.closeAlert();
     } else {
-      this.boardService.saveTask(this.taskData).subscribe((res: any)=>{
-        console.log(res);
-        this.taskData = {};
-        this.router.navigate(['/listTask']);
-      }, (err)=>{
-        console.log(err);
-        this.errorMessage = err.error;
-        this.closeAlert();
-      })
+      this.boardService.saveTask(this.taskData).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.taskData = {};
+          this.router.navigate(['/listTask']);
+        },
+        (err) => {
+          console.log(err);
+          this.errorMessage = err.error;
+          this.closeAlert();
+        }
+      );
+    }
+  }
+  uploadImg(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+  saveTaskImg() {
+    if (!this.taskData.name || !this.taskData.description) {
+      this.errorMessage = 'Process failed: Incomplete data';
+      this.closeAlert();
+    } else {
+      const data = new FormData();
+      data.append('image', this.selectedFile, this.selectedFile.name);
+      data.append('name', this.taskData.name);
+      data.append('description', this.taskData.description);    
+      this.boardService.saveTaskImg(data).subscribe(
+        (res) => {
+          this.router.navigate(['listTask']);          
+        },
+        (err) => {
+          this.errorMessage = err.error;
+          this.closeAlert();
+        }
+      );
     }
   }
   closeAlert() {
